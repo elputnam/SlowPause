@@ -6,8 +6,18 @@ const MAX = 100;
 let grow = 5;
 inc = 0.01;
 
+//CCapture
+// var capture = false; // default is to not capture frames, can be changed with button in browser
+var capturer = new CCapture({
+  format:'webm', 
+  workersPath: 'js/',
+  framerate: 12
+});
+
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  // createCanvas(windowWidth, windowHeight);
+  createCanvas(1920, 1080);
   colorMode(HSB, 360, 100, 100, 100);
   frameRate(12);
   background(0);
@@ -17,6 +27,7 @@ function setup() {
 }
 
 function draw() {
+  if (frameCount==1) capturer.start(); // start the animation capture
   background(0, 1);
   for (let i = 0; i < bubbles.length; i++){
     bubbles[i].move();
@@ -24,11 +35,16 @@ function draw() {
     bubbles[i].edges();
     bubbles[i].show();
   }
+  capturer.capture(document.getElementById('defaultCanvas0'));  
+  if (frameCount==3000){
+    save_record();
+  }
+  print(frameCount);
 }
 
-function windowResized(){
-  resizeCanvas(windowWidth, windowHeight);
-}
+// function windowResized(){
+//   resizeCanvas(windowWidth, windowHeight);
+// }
 
 class Bubble {
   constructor(x, y, r){
@@ -72,4 +88,8 @@ class Bubble {
     ellipse(this.pos.x, this.pos.y, this.r + grow);
     grow += inc;
   }
+}
+
+function save_record() {
+  capturer.save();
 }
