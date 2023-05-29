@@ -65,7 +65,7 @@ class Bubble {
   show(){
     noStroke();
     //stroke(this.hue, this.sat, this.bri);
-    //fill(random(360), random(100), random(100), random(5, 30));
+    // fill(random(360), random(100), random(100), random(5, 30));
     if (frameCount%10 == 0){
     fill(random(360), this.sat, this.bri, random(5, 20));
     }
