@@ -11,7 +11,7 @@ inc = 0.01;
 var capturer = new CCapture({
   format:'webm', 
   workersPath: 'js/',
-  framerate: 12
+  framerate: 15
 });
 
 
@@ -19,7 +19,7 @@ function setup() {
   // createCanvas(windowWidth, windowHeight);
   createCanvas(1920, 1080);
   colorMode(HSB, 360, 100, 100, 100);
-  frameRate(12);
+  frameRate(15);
   background(0);
   for (var i = 0; i < 100; i++){
     bubbles[i] = new Bubble(random(width), random(height), random(20, 100));
@@ -30,7 +30,7 @@ function draw() {
   if (frameCount==1) capturer.start(); // start the animation capture
   background(0, 1);
   for (let i = 0; i < bubbles.length; i++){
-    bubbles[i].move();
+    // bubbles[i].move();
     bubbles[i].breathe();
     bubbles[i].edges();
     bubbles[i].show();
@@ -63,6 +63,7 @@ class Bubble {
   breathe() {
     if (grow  <= MIN || grow >= MAX){
       inc *= -1;
+      fill(this.hue, this.sat, this.bri, random(20));
     }
   }
 
@@ -82,8 +83,9 @@ class Bubble {
     noStroke();
     //stroke(this.hue, this.sat, this.bri);
     //fill(random(360), random(100), random(100), random(5, 30));
-    if (frameCount%10 == 0){
-    fill(random(360), this.sat, this.bri, random(5, 20));
+    if (frameCount%45 == 0){
+    // fill(random(360), this.sat, this.bri, random(20,50));
+      // fill(random(360), 100, 100, random(20,70));
     }
     ellipse(this.pos.x, this.pos.y, this.r + grow);
     grow += inc;
